@@ -6,28 +6,37 @@
 //
 
 import XCTest
-@testable import LightPrice_WatchKit_Extension
 
-class LightPriceTests: XCTestCase {
+protocol HTTPClient {
+    func get(from url: URL)
+}
 
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+class RemoteLightsPriceLoader {
+    let client: HTTPClient
+    
+    init(client: HTTPClient) {
+        self.client = client
     }
-
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+    
+    func load() {
+        client.get(from: URL(string: "a-give-url.com")!)
     }
+}
 
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+class HTTPCLientSpy: HTTPClient {
+    var requestedUrl: URL?
+    
+    func get(from url: URL) {
+        requestedUrl = url
     }
+}
 
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
+class RemoteLightsPriceLoaderTest: XCTestCase {
+
+    func test_init_does_notRequestDataFromUrl() {
+        let client = HTTPCLientSpy()
+        _ = RemoteLightsPriceLoader(client: client)
+        XCTAssertNil(client.requestedUrl)
+        
     }
-
 }
