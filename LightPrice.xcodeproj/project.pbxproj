@@ -18,6 +18,7 @@
 		2D8D138E278B5A9200B7D516 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2D8D138D278B5A9200B7D516 /* Assets.xcassets */; };
 		2D8D1391278B5A9200B7D516 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2D8D1390278B5A9200B7D516 /* Preview Assets.xcassets */; };
 		2D8D139D278B5A9200B7D516 /* LightPriceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D8D139C278B5A9200B7D516 /* LightPriceTests.swift */; };
+		2D8D13BF278B750B00B7D516 /* RemoteLightsPriceLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D8D13BE278B750B00B7D516 /* RemoteLightsPriceLoader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -85,6 +86,7 @@
 		2D8D1393278B5A9200B7D516 /* PushNotificationPayload.apns */ = {isa = PBXFileReference; lastKnownFileType = text; path = PushNotificationPayload.apns; sourceTree = "<group>"; };
 		2D8D1398278B5A9200B7D516 /* LightPriceTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LightPriceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D8D139C278B5A9200B7D516 /* LightPriceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightPriceTests.swift; sourceTree = "<group>"; };
+		2D8D13BE278B750B00B7D516 /* RemoteLightsPriceLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteLightsPriceLoader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -137,6 +139,7 @@
 		2D8D1382278B5A9000B7D516 /* LightPrice WatchKit Extension */ = {
 			isa = PBXGroup;
 			children = (
+				2D8D13BD278B74DD00B7D516 /* ElectricityPriceApi */,
 				2D8D1383278B5A9000B7D516 /* LightPriceApp.swift */,
 				2D8D1385278B5A9000B7D516 /* ContentView.swift */,
 				2D8D1387278B5A9000B7D516 /* NotificationController.swift */,
@@ -164,6 +167,14 @@
 				2D8D139C278B5A9200B7D516 /* LightPriceTests.swift */,
 			);
 			path = LightPriceTests;
+			sourceTree = "<group>";
+		};
+		2D8D13BD278B74DD00B7D516 /* ElectricityPriceApi */ = {
+			isa = PBXGroup;
+			children = (
+				2D8D13BE278B750B00B7D516 /* RemoteLightsPriceLoader.swift */,
+			);
+			path = ElectricityPriceApi;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -324,6 +335,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2D8D1388278B5A9000B7D516 /* NotificationController.swift in Sources */,
+				2D8D13BF278B750B00B7D516 /* RemoteLightsPriceLoader.swift in Sources */,
 				2D8D1386278B5A9000B7D516 /* ContentView.swift in Sources */,
 				2D8D138C278B5A9000B7D516 /* ComplicationController.swift in Sources */,
 				2D8D1384278B5A9000B7D516 /* LightPriceApp.swift in Sources */,
