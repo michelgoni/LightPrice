@@ -41,7 +41,7 @@ class RemoteLightsPriceLoaderTest: XCTestCase {
         XCTAssertNil(client.requestedUrl)
     }
     
-    func test_load_requestDataFromurl() {
+    func test_load_requestDataFromUrl() {
       
         let url = URL(string: "a-given-url.com")!
         let (sut, client) = makeSut(url: url)
