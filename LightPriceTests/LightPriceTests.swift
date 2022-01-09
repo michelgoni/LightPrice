@@ -15,7 +15,7 @@ class RemoteLightsPriceLoaderTest: XCTestCase {
     func test_init_does_notRequestDataFromUrl() {
        
         let (_, client) = makeSut()
-        XCTAssertNil(client.requestedUrl)
+        XCTAssertTrue(client.requestedUrls.isEmpty)
     }
     
     func test_load_requestsºDataFromUrl() {
@@ -37,11 +37,10 @@ class RemoteLightsPriceLoaderTest: XCTestCase {
 }
 
 private class HTTPCLientSpy: HTTPClient {
-    var requestedUrl: URL?
+   
     var requestedUrls = [URL]()
     
     func get(from url: URL) {
-        requestedUrl = url
         requestedUrls.append(url)
     }
 }
