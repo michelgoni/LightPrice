@@ -9,13 +9,6 @@ import XCTest
 import LightPrice_WatchKit_Extension
 
 
-private class HTTPCLientSpy: HTTPClient {
-    var requestedUrl: URL?
-    
-    func get(from url: URL) {
-        requestedUrl = url
-    }
-}
 
 class RemoteLightsPriceLoaderTest: XCTestCase {
 
@@ -30,7 +23,7 @@ class RemoteLightsPriceLoaderTest: XCTestCase {
         let url = URL(string: "a-given-url.com")!
         let (sut, client) = makeSut(url: url)
         sut.load()
-        XCTAssertEqual(client.requestedUrl, url)
+        XCTAssertEqual(client.requestedUrls, [url])
     }
     
     
@@ -41,5 +34,15 @@ class RemoteLightsPriceLoaderTest: XCTestCase {
         return(sut, client)
         
     }
- 
 }
+
+private class HTTPCLientSpy: HTTPClient {
+    var requestedUrl: URL?
+    var requestedUrls = [URL]()
+    
+    func get(from url: URL) {
+        requestedUrl = url
+        requestedUrls.append(url)
+    }
+}
+
