@@ -8,20 +8,38 @@
 import Foundation
 
 public protocol HTTPClient {
-    func get(from url: URL)
+  
+    func data(request: URLRequest) async throws -> (Data, URLResponse)
 }
 
+extension URLSession: HTTPClient {
+    public func data(request: URLRequest) async throws -> (Data, URLResponse) {
+        try await data(for: request, delegate: nil)
+    }
+   
+}
 
 public final class RemoteLightsPriceLoader {
-    let client: HTTPClient
-    let url: URL
+    private let client: HTTPClient
     
-    public init(url: URL, client: HTTPClient) {
-        self.url = url
+    public init (client: HTTPClient = URLSession.shared) {
         self.client = client
     }
     
-    public func load() {
-        client.get(from: URL(string: "a-given-url.com")!)
+    public func performRequest(_ request: URLRequest) async throws -> Data {
+        
+        do {
+            let (data, response) = try await client.data(request: request)
+            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+                throw NetworkError.invalidData
+            }
+            return data
+        }catch {
+            throw NetworkError.connectivity
+        }
+    }
+    public enum NetworkError: Error {
+        case invalidData
+        case connectivity
     }
 }
