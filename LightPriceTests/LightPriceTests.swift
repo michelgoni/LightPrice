@@ -25,16 +25,38 @@ class RemoteLightsPriceLoaderTest: XCTestCase {
         XCTAssertEqual(session.requests, [request])
     }
     
-    func test_perfromrequest_delivers_connectivity_error() async throws {
+    func test_performRequest_delivers_connectivity_error() async throws {
         let (sut, _) = makeSut(result: .failure(anyError()))
         
         do {
             _ = try await sut.performRequest(anyRequest())
             XCTFail("Expected error: \(NetworkError.connectivity)")
         }catch {
-            XCTAssertEqual(error as? NetworkError, NetworkError.connectivity)
+            XCTAssertEqual(error as? NetworkError, .connectivity)
         }
     }
+    
+    func test_performRequest_delivers_BadResponseCodeErrorOnNon200HTTPResponse() async throws {
+        let non200 = (Data(), httPresponse(code: 400))
+        let (sut, _) = makeSut(result: .success(non200))
+        
+        do {
+            _ = try await sut.performRequest(anyRequest())
+            XCTFail("Expected error: \(NetworkError.invalidData)")
+        }catch {
+            XCTAssertEqual(error as? NetworkError, .invalidData)
+        }
+    }
+    
+    func test_performRequest_delivers_DataOn200HTTPResponse() async throws {
+        let validData = Data("some data".utf8)
+        let validResponse = httPresponse(code: 200)
+        
+        let (sut, _) = makeSut(result: .success((validData, validResponse)))
+        let receivedData = try await sut.performRequest(anyRequest())
+        XCTAssertEqual(receivedData, validData)
+    }
+    
     
     
     //MARK: -- Helper

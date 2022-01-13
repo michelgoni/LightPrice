@@ -27,16 +27,14 @@ public final class RemoteLightsPriceLoader {
     }
     
     public func performRequest(_ request: URLRequest) async throws -> Data {
-        
-        do {
-            let (data, response) = try await client.data(request: request)
-            guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-                throw NetworkError.invalidData
-            }
-            return data
-        }catch {
+        guard let (data, response) = try? await client.data(request: request) else {
             throw NetworkError.connectivity
         }
+        
+        guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+            throw NetworkError.invalidData
+        }
+        return data
     }
     
   
