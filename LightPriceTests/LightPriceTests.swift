@@ -12,11 +12,18 @@ import LightPrice_WatchKit_Extension
 
 class RemoteLightsPriceLoaderTest: XCTestCase {
 
-    func test_init_does_notRequestDataFromUrl() {
+    func test_init_does_notRequestData() {
        
-        let anyValidResponse = (Data(), httPresponse(code: 200))
-        let (_, session) = makeSut(result: .success(anyValidResponse))
+        let (_, session) = makeSut()
         XCTAssertEqual(session.requests, [])
+    }
+    
+    func test_perfomRequest_starts_networkRequest() async throws {
+       
+        let request = anyRequest()
+        let (sut, session) = makeSut(result: .success(anyResponse()))
+        _ = try await sut.performRequest(request)
+        XCTAssertEqual(session.requests, [request])
     }
     
 //    func test_load_requestsºDataFromUrl() {
@@ -29,20 +36,24 @@ class RemoteLightsPriceLoaderTest: XCTestCase {
     
     
     //MARK: -- Helper
-    private func makeSut(result: Result<(Data, URLResponse), Error>) -> (sut: RemoteLightsPriceLoader, client: HTTPCLientSpy) {
+    private func makeSut(result: Result<(Data, URLResponse), Error> = .success(anyResponse())) -> (sut: RemoteLightsPriceLoader, client: HTTPCLientSpy) {
         let client = HTTPCLientSpy(result: result)
         let sut =  RemoteLightsPriceLoader(client: client)
         return(sut, client)
         
     }
-    
-    private func anyRequest() -> URLRequest {
-        URLRequest(url: URL(string: "a-given-url.com")!)
-    }
-    
-    private func httPresponse(url: URL = URL(string: "a-given-url.com")!, code: Int) -> HTTPURLResponse {
-        HTTPURLResponse(url: url, statusCode: code, httpVersion: nil, headerFields: nil)!
-    }
+}
+
+private func anyResponse() -> (Data, URLResponse){
+    (Data(), httPresponse(code: 200))
+}
+
+private func anyRequest() -> URLRequest {
+    URLRequest(url: URL(string: "a-given-url.com")!)
+}
+
+private func httPresponse(url: URL = URL(string: "a-given-url.com")!, code: Int) -> HTTPURLResponse {
+    HTTPURLResponse(url: url, statusCode: code, httpVersion: nil, headerFields: nil)!
 }
 
 private class HTTPCLientSpy: HTTPClient {
