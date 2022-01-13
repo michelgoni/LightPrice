@@ -9,7 +9,6 @@ import XCTest
 import LightPrice_WatchKit_Extension
 
 
-
 class RemoteLightsPriceLoaderTest: XCTestCase {
 
     func test_init_does_notRequestData() {
@@ -26,13 +25,16 @@ class RemoteLightsPriceLoaderTest: XCTestCase {
         XCTAssertEqual(session.requests, [request])
     }
     
-//    func test_load_requestsºDataFromUrl() {
-//
-//        let url = URL(string: "a-given-url.com")!
-//        let (sut, client) = makeSut(url: url)
-//        sut.load()
-//        XCTAssertEqual(client.requestedUrls, [url])
-//    }
+    func test_perfromrequest_delivers_connectivity_error() async throws {
+        let (sut, _) = makeSut(result: .failure(anyError()))
+        
+        do {
+            _ = try await sut.performRequest(anyRequest())
+            XCTFail("Expected error: \(NetworkError.connectivity)")
+        }catch {
+            XCTAssertEqual(error as? NetworkError, NetworkError.connectivity)
+        }
+    }
     
     
     //MARK: -- Helper
@@ -44,6 +46,10 @@ class RemoteLightsPriceLoaderTest: XCTestCase {
     }
 }
 
+private struct AnyError: Error {}
+private func anyError() -> Error {
+    AnyError()
+}
 private func anyResponse() -> (Data, URLResponse){
     (Data(), httPresponse(code: 200))
 }

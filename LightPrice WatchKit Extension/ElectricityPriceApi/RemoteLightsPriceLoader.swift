@@ -38,8 +38,11 @@ public final class RemoteLightsPriceLoader {
             throw NetworkError.connectivity
         }
     }
-    public enum NetworkError: Error {
-        case invalidData
-        case connectivity
-    }
+    
+  
+}
+
+public enum NetworkError: Error {
+    case invalidData
+    case connectivity
 }
