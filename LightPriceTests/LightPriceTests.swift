@@ -30,9 +30,11 @@ class RemoteLightsPriceLoaderTest: XCTestCase {
         
         do {
             _ = try await sut.performRequest(anyRequest())
-            XCTFail("Expected error: \(NetworkError.connectivity)")
-        }catch {
-            XCTAssertEqual(error as? NetworkError, .connectivity)
+            XCTFail("Expected error: \(RemoteLightsPriceLoader.NetworkError.connectivity)")
+        }catch let error {
+            var capturedErrors = [RemoteLightsPriceLoader.NetworkError]()
+            capturedErrors.append(error as! RemoteLightsPriceLoader.NetworkError)
+            XCTAssertEqual(capturedErrors, [RemoteLightsPriceLoader.NetworkError.connectivity])
         }
     }
     
@@ -42,9 +44,11 @@ class RemoteLightsPriceLoaderTest: XCTestCase {
         
         do {
             _ = try await sut.performRequest(anyRequest())
-            XCTFail("Expected error: \(NetworkError.invalidData)")
+            XCTFail("Expected error: \(RemoteLightsPriceLoader.NetworkError.invalidData)")
         }catch {
-            XCTAssertEqual(error as? NetworkError, .invalidData)
+            var capturedErrors = [RemoteLightsPriceLoader.NetworkError]()
+            capturedErrors.append(error as! RemoteLightsPriceLoader.NetworkError)
+            XCTAssertEqual(error as? RemoteLightsPriceLoader.NetworkError, .invalidData)
         }
     }
     

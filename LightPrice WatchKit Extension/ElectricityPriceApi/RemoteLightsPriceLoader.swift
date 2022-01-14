@@ -20,6 +20,11 @@ extension URLSession: HTTPClient {
 }
 
 public final class RemoteLightsPriceLoader {
+    
+    public enum NetworkError: Error {
+        case invalidData
+        case connectivity
+    }
     private let client: HTTPClient
     
     public init (client: HTTPClient = URLSession.shared) {
@@ -36,11 +41,6 @@ public final class RemoteLightsPriceLoader {
         }
         return data
     }
-    
-  
 }
 
-public enum NetworkError: Error {
-    case invalidData
-    case connectivity
-}
+
