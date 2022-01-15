@@ -21,7 +21,7 @@ extension URLSession: HTTPClient {
 
 public final class RemoteLightsPriceLoader {
     
-    public enum NetworkError: Error {
+    public enum Error: Swift.Error, Equatable {
         case invalidData
         case connectivity
     }
@@ -31,15 +31,15 @@ public final class RemoteLightsPriceLoader {
         self.client = client
     }
     
-    public func performRequest(_ request: URLRequest) async throws -> Data {
+    public func performRequest(_ request: URLRequest) async throws -> Result<Data, Error> {
         guard let (data, response) = try? await client.data(request: request) else {
-            throw NetworkError.connectivity
+            throw Error.connectivity
         }
         
         guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-            throw NetworkError.invalidData
+            throw Error.invalidData
         }
-        return data
+        return .success(data)
     }
 }
 

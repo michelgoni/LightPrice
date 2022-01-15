@@ -26,15 +26,16 @@ class RemoteLightsPriceLoaderTest: XCTestCase {
     }
     
     func test_performRequest_delivers_connectivity_error() async throws {
-        let (sut, _) = makeSut(result: .failure(anyError()))
-        var capturedErrors = [RemoteLightsPriceLoader.NetworkError]()
+        let (sut, _) = makeSut(result: .failure(RemoteLightsPriceLoader.Error.connectivity))
+        var capturedResults = [Result<Data, RemoteLightsPriceLoader.Error>]()
         do {
-            _ = try await sut.performRequest(anyRequest())
-            XCTFail("Expected error: \(RemoteLightsPriceLoader.NetworkError.connectivity)")
-        }catch let error {
-          
-            capturedErrors.append(error as! RemoteLightsPriceLoader.NetworkError)
-            XCTAssertEqual(capturedErrors, [RemoteLightsPriceLoader.NetworkError.connectivity])
+            let _ = try await sut.performRequest(anyRequest())
+           
+            XCTFail("Expected error: \(RemoteLightsPriceLoader.Error.connectivity)")
+        }catch{
+            let capturedError: Result<Data, RemoteLightsPriceLoader.Error> = .failure(error as! RemoteLightsPriceLoader.Error)
+            capturedResults.append(capturedError)
+            XCTAssertEqual(capturedResults, [.failure(.connectivity)])
         }
     }
     
@@ -42,16 +43,16 @@ class RemoteLightsPriceLoaderTest: XCTestCase {
         let errorCodes =   [199, 201, 300, 400, 401, 404, 500]
         errorCodes.forEach { code in
             Task {
-                var capturedErrors = [RemoteLightsPriceLoader.NetworkError]()
+                var capturedResults = [Result<Data, RemoteLightsPriceLoader.Error>]()
                 let non200 = (Data(), httPresponse(code: code))
                 let (sut, _) = makeSut(result: .success(non200))
                 do {
-                    _ = try await sut.performRequest(anyRequest())
-                    XCTFail("Expected error: \(RemoteLightsPriceLoader.NetworkError.invalidData)")
+                    let _ = try await sut.performRequest(anyRequest())
+                    XCTFail("Expected error: \(RemoteLightsPriceLoader.Error.invalidData)")
                 }catch {
-                  
-                    capturedErrors.append(error as! RemoteLightsPriceLoader.NetworkError)
-                    XCTAssertEqual(capturedErrors, [.invalidData])
+                    let capturedError: Result<Data, RemoteLightsPriceLoader.Error> = .failure(error as! RemoteLightsPriceLoader.Error)
+                    capturedResults.append(capturedError)
+                    XCTAssertEqual(capturedResults, [.failure(.connectivity)])
                 }
             }
         }
@@ -61,16 +62,20 @@ class RemoteLightsPriceLoaderTest: XCTestCase {
         let validData = Data("some data".utf8)
         let validResponse = httPresponse(code: 200)
         let (sut, _) = makeSut(result: .success((validData, validResponse)))
+        var capturedResults = [Result<Data, RemoteLightsPriceLoader.Error>]()
         let receivedData = try await sut.performRequest(anyRequest())
-        XCTAssertEqual(receivedData, validData)
+        capturedResults.append(receivedData)
+        XCTAssertEqual(capturedResults, [.success(Data("some data".utf8))])
     }
-    
+   
     func test_performRequest_delivers_ErrorOn200HTTPResponseWithInvalidJson() async throws {
-        let invalidJsonData = Data("invalid json".utf8)
+        let invalidJsonData = Data("some data".utf8)
         let validResponse = httPresponse(code: 200)
         let (sut, _) = makeSut(result: .success((invalidJsonData, validResponse)))
+        var capturedResults = [Result<Data, RemoteLightsPriceLoader.Error>]()
         let receivedData = try await sut.performRequest(anyRequest())
-        XCTAssertEqual(receivedData, invalidJsonData)
+        capturedResults.append(receivedData)
+        XCTAssertEqual(capturedResults, [.success(Data("some data".utf8))])
     }
     
     
