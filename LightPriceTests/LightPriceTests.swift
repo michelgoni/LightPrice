@@ -52,7 +52,7 @@ class RemoteLightsPriceLoaderTest: XCTestCase {
                 }catch {
                     let capturedError: Result<Data, RemoteLightsPriceLoader.Error> = .failure(error as! RemoteLightsPriceLoader.Error)
                     capturedResults.append(capturedError)
-                    XCTAssertEqual(capturedResults, [.failure(.connectivity)])
+                    XCTAssertEqual(capturedResults, [.failure(.invalidData)])
                 }
             }
         }
