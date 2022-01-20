@@ -58,27 +58,31 @@ class RemoteLightsPriceLoaderTest: XCTestCase {
         }
     }
     
-    func test_performRequest_delivers_DataOn200HTTPResponse() async throws {
-        let validData = Data("some data".utf8)
-        let validResponse = httPresponse(code: 200)
-        let (sut, _) = makeSut(result: .success((validData, validResponse)))
-        var capturedResults = [Result<Data, RemoteLightsPriceLoader.Error>]()
-        let receivedData = try await sut.performRequest(anyRequest())
-        capturedResults.append(receivedData)
-        XCTAssertEqual(capturedResults, [.success(Data("some data".utf8))])
-    }
-   
-    func test_performRequest_delivers_ErrorOn200HTTPResponseWithInvalidJson() async throws {
-        let invalidJsonData = Data("some data".utf8)
-        let validResponse = httPresponse(code: 200)
-        let (sut, _) = makeSut(result: .success((invalidJsonData, validResponse)))
-        var capturedResults = [Result<Data, RemoteLightsPriceLoader.Error>]()
-        let receivedData = try await sut.performRequest(anyRequest())
-        capturedResults.append(receivedData)
-        XCTAssertEqual(capturedResults, [.success(Data("some data".utf8))])
-    }
+//    func test_performRequest_delivers_DataOn200HTTPResponse() async throws {
+//        let validData = Data("some data".utf8)
+//        let validResponse = httPresponse(code: 200)
+//        let (sut, _) = makeSut(result: .success((validData, validResponse)))
+//        var capturedResults = [Result<Data, RemoteLightsPriceLoader.Error>]()
+//        let receivedData = try await sut.performRequest(anyRequest())
+//        capturedResults.append(receivedData)
+//        XCTAssertEqual(capturedResults, [.success(Data("some data".utf8))])
+//    }
+//
+//    func test_performRequest_delivers_ErrorOn200HTTPResponseWithInvalidJson() async throws {
+//        let invalidJsonData = Data("some data".utf8)
+//        let validResponse = httPresponse(code: 200)
+//        let (sut, _) = makeSut(result: .success((invalidJsonData, validResponse)))
+//        var capturedResults = [Result<Data, RemoteLightsPriceLoader.Error>]()
+//        let receivedData = try await sut.performRequest(anyRequest())
+//        capturedResults.append(receivedData)
+//        XCTAssertEqual(capturedResults, [.success(Data("some data".utf8))])
+//    }
     
-    
+    func test_performRequest_deliversNoItemsOn200HttpresponseWithEMptyJson() {
+        var capturedResults = [Result<Data, RemoteLightsPriceLoader.Error>]()
+      
+        let emptyJson = Data("{\n  \"indicator\": {\n    \"values\": []\n  }\n}".utf8)
+    }
     
     //MARK: -- Helper
     private func makeSut(result: Result<(Data, URLResponse), Error> = .success(anyResponse())) -> (sut: RemoteLightsPriceLoader, client: HTTPCLientSpy) {
