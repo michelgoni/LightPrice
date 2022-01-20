@@ -19,6 +19,7 @@
 		2D8D1391278B5A9200B7D516 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2D8D1390278B5A9200B7D516 /* Preview Assets.xcassets */; };
 		2D8D139D278B5A9200B7D516 /* LightPriceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D8D139C278B5A9200B7D516 /* LightPriceTests.swift */; };
 		2D8D13BF278B750B00B7D516 /* RemoteLightsPriceLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D8D13BE278B750B00B7D516 /* RemoteLightsPriceLoader.swift */; };
+		B40EAA1C27999354006DA634 /* LightPriceResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = B40EAA1B27999354006DA634 /* LightPriceResponse.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -87,6 +88,7 @@
 		2D8D1398278B5A9200B7D516 /* LightPriceTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LightPriceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D8D139C278B5A9200B7D516 /* LightPriceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightPriceTests.swift; sourceTree = "<group>"; };
 		2D8D13BE278B750B00B7D516 /* RemoteLightsPriceLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteLightsPriceLoader.swift; sourceTree = "<group>"; };
+		B40EAA1B27999354006DA634 /* LightPriceResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightPriceResponse.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -173,6 +175,7 @@
 			isa = PBXGroup;
 			children = (
 				2D8D13BE278B750B00B7D516 /* RemoteLightsPriceLoader.swift */,
+				B40EAA1B27999354006DA634 /* LightPriceResponse.swift */,
 			);
 			path = ElectricityPriceApi;
 			sourceTree = "<group>";
@@ -338,6 +341,7 @@
 				2D8D13BF278B750B00B7D516 /* RemoteLightsPriceLoader.swift in Sources */,
 				2D8D1386278B5A9000B7D516 /* ContentView.swift in Sources */,
 				2D8D138C278B5A9000B7D516 /* ComplicationController.swift in Sources */,
+				B40EAA1C27999354006DA634 /* LightPriceResponse.swift in Sources */,
 				2D8D1384278B5A9000B7D516 /* LightPriceApp.swift in Sources */,
 				2D8D138A278B5A9000B7D516 /* NotificationView.swift in Sources */,
 			);
