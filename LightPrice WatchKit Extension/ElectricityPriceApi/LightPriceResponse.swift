@@ -30,7 +30,7 @@ public struct Indicator: Codable {
 
 
 // MARK: - Value
-public struct Value: Codable {
+public struct Value: Codable, Equatable {
     let value: Double
     let datetime: String
     let geoID: Int

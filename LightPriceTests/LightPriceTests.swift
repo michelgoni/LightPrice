@@ -27,13 +27,13 @@ class RemoteLightsPriceLoaderTest: XCTestCase {
     
     func test_performRequest_delivers_connectivity_error() async throws {
         let (sut, _) = makeSut(result: .failure(RemoteLightsPriceLoader.Error.connectivity))
-        var capturedResults = [Result<Data, RemoteLightsPriceLoader.Error>]()
+        var capturedResults = [Result<[Value], RemoteLightsPriceLoader.Error>]()
         do {
             let _ = try await sut.performRequest(anyRequest())
            
             XCTFail("Expected error: \(RemoteLightsPriceLoader.Error.connectivity)")
         }catch{
-            let capturedError: Result<Data, RemoteLightsPriceLoader.Error> = .failure(error as! RemoteLightsPriceLoader.Error)
+            let capturedError: Result<[Value], RemoteLightsPriceLoader.Error> = .failure(error as! RemoteLightsPriceLoader.Error)
             capturedResults.append(capturedError)
             XCTAssertEqual(capturedResults, [.failure(.connectivity)])
         }
