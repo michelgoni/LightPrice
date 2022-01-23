@@ -36,9 +36,10 @@ public final class RemoteLightsPriceLoader {
             throw Error.connectivity
         }
         
-        guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-            throw Error.invalidData
-        }
+        guard let response = response as? HTTPURLResponse, response.statusCode == 200,
+              let _ = try? JSONSerialization.jsonObject(with: data) else {
+                  throw Error.invalidData
+              }
         return .success([])
     }
 }

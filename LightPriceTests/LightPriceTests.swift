@@ -57,16 +57,7 @@ class RemoteLightsPriceLoaderTest: XCTestCase {
             }
         }
     }
-    
-    func test_performRequest_delivers_DataOn200HTTPResponse() async throws {
-        let validData = Data("some data".utf8)
-        let validResponse = httPresponse(code: 200)
-        let (sut, _) = makeSut(result: .success((validData, validResponse)))
-        var capturedResults = [Result<[Value], RemoteLightsPriceLoader.Error>]()
-        let receivedData = try await sut.performRequest(anyRequest())
-        capturedResults.append(receivedData)
-        XCTAssertEqual(capturedResults, [.success([])])
-    }
+
 //
 //    func test_performRequest_delivers_ErrorOn200HTTPResponseWithInvalidJson() async throws {
 //        let invalidJsonData = Data("some data".utf8)
@@ -78,9 +69,25 @@ class RemoteLightsPriceLoaderTest: XCTestCase {
 //        XCTAssertEqual(capturedResults, [.success(Data("some data".utf8))])
 //    }
     
-    func test_performRequest_deliversNoItemsOn200HttpresponseWithEMptyJson() {
-        var capturedResults = [Result<Data, RemoteLightsPriceLoader.Error>]()
+    func test_performRequest_deliversNoItemsOn200HttpresponseWithEMptyJson() async throws  {
+       
         let emptyJson = Data("{\n  \"indicator\": {\n    \"values\": []\n  }\n}".utf8)
+        let validResponse = httPresponse(code: 200)
+        let (sut, _) = makeSut(result: .success((emptyJson, validResponse)))
+        var capturedResults = [Result<[Value], RemoteLightsPriceLoader.Error>]()
+        let receivedData = try await sut.performRequest(anyRequest())
+        capturedResults.append(receivedData)
+        XCTAssertEqual(capturedResults, [.success([])])
+    }
+    
+    func test_performRequest_delivers_DataOn200HTTPResponse() async throws {
+        let validData = Data("some data".utf8)
+        let validResponse = httPresponse(code: 200)
+        let (sut, _) = makeSut(result: .success((validData, validResponse)))
+        var capturedResults = [Result<[Value], RemoteLightsPriceLoader.Error>]()
+        let receivedData = try await sut.performRequest(anyRequest())
+        capturedResults.append(receivedData)
+        XCTAssertEqual(capturedResults, [.success([])])
     }
     
     //MARK: -- Helper
