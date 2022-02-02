@@ -20,6 +20,8 @@
 		2D8D139D278B5A9200B7D516 /* LightPriceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D8D139C278B5A9200B7D516 /* LightPriceTests.swift */; };
 		2D8D13BF278B750B00B7D516 /* RemoteLightsPriceLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D8D13BE278B750B00B7D516 /* RemoteLightsPriceLoader.swift */; };
 		B40EAA1C27999354006DA634 /* LightPriceResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = B40EAA1B27999354006DA634 /* LightPriceResponse.swift */; };
+		B4EF1A2327AB0F8300E70DD3 /* TestUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4EF1A2227AB0F8300E70DD3 /* TestUtils.swift */; };
+		B4EF1A2527AB0FC600E70DD3 /* PricesResponse.json in Resources */ = {isa = PBXBuildFile; fileRef = B4EF1A2427AB0FC600E70DD3 /* PricesResponse.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -89,6 +91,8 @@
 		2D8D139C278B5A9200B7D516 /* LightPriceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightPriceTests.swift; sourceTree = "<group>"; };
 		2D8D13BE278B750B00B7D516 /* RemoteLightsPriceLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteLightsPriceLoader.swift; sourceTree = "<group>"; };
 		B40EAA1B27999354006DA634 /* LightPriceResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightPriceResponse.swift; sourceTree = "<group>"; };
+		B4EF1A2227AB0F8300E70DD3 /* TestUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestUtils.swift; sourceTree = "<group>"; };
+		B4EF1A2427AB0FC600E70DD3 /* PricesResponse.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = PricesResponse.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -166,7 +170,9 @@
 		2D8D139B278B5A9200B7D516 /* LightPriceTests */ = {
 			isa = PBXGroup;
 			children = (
+				B4EF1A2427AB0FC600E70DD3 /* PricesResponse.json */,
 				2D8D139C278B5A9200B7D516 /* LightPriceTests.swift */,
+				B4EF1A2227AB0F8300E70DD3 /* TestUtils.swift */,
 			);
 			path = LightPriceTests;
 			sourceTree = "<group>";
@@ -327,6 +333,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B4EF1A2527AB0FC600E70DD3 /* PricesResponse.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -352,6 +359,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2D8D139D278B5A9200B7D516 /* LightPriceTests.swift in Sources */,
+				B4EF1A2327AB0F8300E70DD3 /* TestUtils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
