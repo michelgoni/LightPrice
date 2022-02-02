@@ -170,9 +170,8 @@
 		2D8D139B278B5A9200B7D516 /* LightPriceTests */ = {
 			isa = PBXGroup;
 			children = (
-				B4EF1A2427AB0FC600E70DD3 /* PricesResponse.json */,
+				B4EF1A2627AB14EB00E70DD3 /* Utils */,
 				2D8D139C278B5A9200B7D516 /* LightPriceTests.swift */,
-				B4EF1A2227AB0F8300E70DD3 /* TestUtils.swift */,
 			);
 			path = LightPriceTests;
 			sourceTree = "<group>";
@@ -184,6 +183,15 @@
 				B40EAA1B27999354006DA634 /* LightPriceResponse.swift */,
 			);
 			path = ElectricityPriceApi;
+			sourceTree = "<group>";
+		};
+		B4EF1A2627AB14EB00E70DD3 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				B4EF1A2427AB0FC600E70DD3 /* PricesResponse.json */,
+				B4EF1A2227AB0F8300E70DD3 /* TestUtils.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
