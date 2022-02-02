@@ -20,20 +20,22 @@ class RemoteLightsPriceLoaderTest: XCTestCase {
     func test_perfomRequest_starts_networkRequest() async throws {
        
         let request = anyRequest()
-        let (sut, session) = makeSut(result: .success(anyResponse()))
-        _ = try await sut.performRequest(request)
+        
+       
+        let (sut, session) = makeSut(result: .success(anyResponse1()))
+        _ = try await sut.performRequest1(request)
         XCTAssertEqual(session.requests, [request])
     }
     
     func test_performRequest_delivers_connectivity_error() async throws {
         let (sut, _) = makeSut(result: .failure(RemoteLightsPriceLoader.Error.connectivity))
-        var capturedResults = [Result<[Value], RemoteLightsPriceLoader.Error>]()
+        var capturedResults = [Result<LightPriceResponse, RemoteLightsPriceLoader.Error>]()
         do {
-            let _ = try await sut.performRequest(anyRequest())
+            let _ = try await sut.performRequest1(anyRequest())
            
             XCTFail("Expected error: \(RemoteLightsPriceLoader.Error.connectivity)")
         }catch{
-            let capturedError: Result<[Value], RemoteLightsPriceLoader.Error> = .failure(error as! RemoteLightsPriceLoader.Error)
+            let capturedError: Result<LightPriceResponse, RemoteLightsPriceLoader.Error> = .failure(error as! RemoteLightsPriceLoader.Error)
             capturedResults.append(capturedError)
             XCTAssertEqual(capturedResults, [.failure(.connectivity)])
         }
@@ -43,60 +45,54 @@ class RemoteLightsPriceLoaderTest: XCTestCase {
         let errorCodes =   [199, 201, 300, 400, 401, 404, 500]
         errorCodes.forEach { code in
             Task {
-                var capturedResults = [Result<Data, RemoteLightsPriceLoader.Error>]()
+                var capturedResults = [Result<LightPriceResponse, RemoteLightsPriceLoader.Error>]()
                 let non200 = (Data(), httPresponse(code: code))
                 let (sut, _) = makeSut(result: .success(non200))
                 do {
-                    let _ = try await sut.performRequest(anyRequest())
+                    let _ = try await sut.performRequest1(anyRequest())
                     XCTFail("Expected error: \(RemoteLightsPriceLoader.Error.invalidData)")
                 }catch {
-                    let capturedError: Result<Data, RemoteLightsPriceLoader.Error> = .failure(error as! RemoteLightsPriceLoader.Error)
+                    let capturedError: Result<LightPriceResponse, RemoteLightsPriceLoader.Error> = .failure(error as! RemoteLightsPriceLoader.Error)
                     capturedResults.append(capturedError)
                     XCTAssertEqual(capturedResults, [.failure(.invalidData)])
                 }
             }
         }
     }
-
-//
-//    func test_performRequest_delivers_ErrorOn200HTTPResponseWithInvalidJson() async throws {
-//        let invalidJsonData = Data("some data".utf8)
+    
+//    func test_performRequest_delivers_DataOn200HTTPResponse() async throws {
+//        let validData = Data("some data".utf8)
 //        let validResponse = httPresponse(code: 200)
-//        let (sut, _) = makeSut(result: .success((invalidJsonData, validResponse)))
-//        var capturedResults = [Result<Data, RemoteLightsPriceLoader.Error>]()
+//        let (sut, _) = makeSut(result: .success((validData, validResponse)))
+//        var capturedResults = [Result<Data?, RemoteLightsPriceLoader.Error>]()
 //        let receivedData = try await sut.performRequest(anyRequest())
 //        capturedResults.append(receivedData)
-//        XCTAssertEqual(capturedResults, [.success(Data("some data".utf8))])
+//        XCTAssertEqual(capturedResults, [.success(validData)])
 //    }
     
-    func test_performRequest_deliversNoItemsOn200HttpresponseWithEMptyJson() async throws  {
-       
-        let emptyJson = Data("{\n  \"indicator\": {\n    \"values\": []\n  }\n}".utf8)
-        let validResponse = httPresponse(code: 200)
-        let (sut, _) = makeSut(result: .success((emptyJson, validResponse)))
-        var capturedResults = [Result<[Value], RemoteLightsPriceLoader.Error>]()
-        let receivedData = try await sut.performRequest(anyRequest())
-        capturedResults.append(receivedData)
-        XCTAssertEqual(capturedResults, [.success([])])
-    }
-    
-    func test_performRequest_delivers_DataOn200HTTPResponse() async throws {
-        let validData = Data("some data".utf8)
+    func test_performRequest1_delivers_DataOn200HTTPResponse() async throws {
+        let lihtPriceReponse = try! JSONDecoder().decode(LightPriceResponse.self,
+                                                   from: MockedData.LightPriceReponse.lightPriceResponse)
+        let validData = try! JSONEncoder().encode(lihtPriceReponse)
+        
         let validResponse = httPresponse(code: 200)
         let (sut, _) = makeSut(result: .success((validData, validResponse)))
-        var capturedResults = [Result<[Value], RemoteLightsPriceLoader.Error>]()
-        let receivedData = try await sut.performRequest(anyRequest())
+        var capturedResults = [Result<LightPriceResponse?, RemoteLightsPriceLoader.Error>]()
+        let receivedData = try await sut.performRequest1(anyRequest())
         capturedResults.append(receivedData)
-        XCTAssertEqual(capturedResults, [.success([])])
+        
+       
+        XCTAssertEqual(capturedResults, [.success(lihtPriceReponse)])
     }
     
     //MARK: -- Helper
-    private func makeSut(result: Result<(Data, URLResponse), Error> = .success(anyResponse())) -> (sut: RemoteLightsPriceLoader, client: HTTPCLientSpy) {
+    private func makeSut(result: Result<(Data?, URLResponse), Error> = .success(anyResponse())) -> (sut: RemoteLightsPriceLoader, client: HTTPCLientSpy) {
         let client = HTTPCLientSpy(result: result)
         let sut =  RemoteLightsPriceLoader(client: client)
         return(sut, client)
         
     }
+    
 }
 
 private struct AnyError: Error {}
@@ -105,6 +101,13 @@ private func anyError() -> Error {
 }
 private func anyResponse() -> (Data, URLResponse){
     (Data(), httPresponse(code: 200))
+}
+
+private func anyResponse1() -> (Data, URLResponse){
+    let lihtPriceReponse = try! JSONDecoder().decode(LightPriceResponse.self,
+                                               from: MockedData.LightPriceReponse.lightPriceResponse)
+    let validData = try! JSONEncoder().encode(lihtPriceReponse)
+   return (validData, httPresponse(code: 200))
 }
 
 private func anyRequest() -> URLRequest {
@@ -118,11 +121,11 @@ private func httPresponse(url: URL = URL(string: "a-given-url.com")!, code: Int)
 private class HTTPCLientSpy: HTTPClient {
     
     private (set) var requests = [URLRequest]()
-    let result: Result<(Data, URLResponse), Error>
-    init(result: Result<(Data, URLResponse), Error>) {
+    let result: Result<(Data?, URLResponse), Error>
+    init(result: Result<(Data?, URLResponse), Error>) {
         self.result = result
     }
-    func data(request: URLRequest) async throws -> (Data, URLResponse) {
+    func data(request: URLRequest) async throws -> (Data?, URLResponse) {
         self.requests.append(request)
         return try result.get()
         
