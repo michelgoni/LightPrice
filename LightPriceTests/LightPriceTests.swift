@@ -81,7 +81,7 @@ class RemoteLightsPriceLoaderTest: XCTestCase {
     }
 
     
-    func test_performRequest1_delivers_DataOn200HTTPResponse() async throws {
+    func test_performRequest_delivers_DataOn200HTTPResponse() async throws {
         let lihtPriceReponse = try! JSONDecoder().decode(LightPriceResponse.self,
                                                    from: MockedData.LightPriceReponse.lightPriceResponse)
         let validData = try! JSONEncoder().encode(lihtPriceReponse)
