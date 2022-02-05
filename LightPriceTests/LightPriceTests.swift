@@ -23,7 +23,7 @@ class RemoteLightsPriceLoaderTest: XCTestCase {
         
        
         let (sut, session) = makeSut(result: .success(anyResponse1()))
-        _ = try await sut.performRequest1(request)
+        _ = try await sut.performRequest(request)
         XCTAssertEqual(session.requests, [request])
     }
     
@@ -31,7 +31,7 @@ class RemoteLightsPriceLoaderTest: XCTestCase {
         let (sut, _) = makeSut(result: .failure(RemoteLightsPriceLoader.Error.connectivity))
         var capturedResults = [Result<LightPriceResponse, RemoteLightsPriceLoader.Error>]()
         do {
-            let _ = try await sut.performRequest1(anyRequest())
+            let _ = try await sut.performRequest(anyRequest())
            
             XCTFail("Expected error: \(RemoteLightsPriceLoader.Error.connectivity)")
         }catch{
@@ -49,7 +49,7 @@ class RemoteLightsPriceLoaderTest: XCTestCase {
                 let non200 = (Data(), httPresponse(code: code))
                 let (sut, _) = makeSut(result: .success(non200))
                 do {
-                    let _ = try await sut.performRequest1(anyRequest())
+                    let _ = try await sut.performRequest(anyRequest())
                     XCTFail("Expected error: \(RemoteLightsPriceLoader.Error.invalidData)")
                 }catch {
                     let capturedError: Result<LightPriceResponse, RemoteLightsPriceLoader.Error> = .failure(error as! RemoteLightsPriceLoader.Error)
@@ -59,16 +59,7 @@ class RemoteLightsPriceLoaderTest: XCTestCase {
             }
         }
     }
-    
-//    func test_performRequest_delivers_DataOn200HTTPResponse() async throws {
-//        let validData = Data("some data".utf8)
-//        let validResponse = httPresponse(code: 200)
-//        let (sut, _) = makeSut(result: .success((validData, validResponse)))
-//        var capturedResults = [Result<Data?, RemoteLightsPriceLoader.Error>]()
-//        let receivedData = try await sut.performRequest(anyRequest())
-//        capturedResults.append(receivedData)
-//        XCTAssertEqual(capturedResults, [.success(validData)])
-//    }
+
     
     func test_performRequest1_delivers_DataOn200HTTPResponse() async throws {
         let lihtPriceReponse = try! JSONDecoder().decode(LightPriceResponse.self,
@@ -78,7 +69,7 @@ class RemoteLightsPriceLoaderTest: XCTestCase {
         let validResponse = httPresponse(code: 200)
         let (sut, _) = makeSut(result: .success((validData, validResponse)))
         var capturedResults = [Result<LightPriceResponse?, RemoteLightsPriceLoader.Error>]()
-        let receivedData = try await sut.performRequest1(anyRequest())
+        let receivedData = try await sut.performRequest(anyRequest())
         capturedResults.append(receivedData)
         
        
