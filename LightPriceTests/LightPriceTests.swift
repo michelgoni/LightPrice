@@ -96,8 +96,8 @@ class RemoteLightsPriceLoaderTest: XCTestCase {
                 
                
                 XCTAssertEqual(capturedResults, [.success(validEmptyData().1)])
-            }catch let error {
-                XCTFail("Fail with: \(error)")
+            }catch {
+                XCTFail("Expected success with and empty item: \(validEmptyData().1)")
             }
         }
         
@@ -117,8 +117,8 @@ class RemoteLightsPriceLoaderTest: XCTestCase {
                 let receivedData = try await sut.performRequest(anyRequest())
                 capturedResults.append(receivedData)
                 XCTAssertEqual(capturedResults, [.success(validData().1)])
-            }catch let error {
-                XCTFail("Fail with: \(error)")
+            }catch {
+                XCTFail("Expected success with some data: \(validData().1)")
             }
         }
       
