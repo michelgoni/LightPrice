@@ -83,13 +83,13 @@ class RemoteLightsPriceLoaderTest: XCTestCase {
     func test_load_deliversNoItemsOn200HTTPReponseWithEmptyJSONList() async throws {
        
         let validResponse = httPresponse(code: 200)
-        let (sut, _) = makeSut(result: .success((validData().0, validResponse)))
+        let (sut, _) = makeSut(result: .success((validEmptyData().0, validResponse)))
         var capturedResults = [Result<LightPriceResponse?, RemoteLightsPriceLoader.Error>]()
         let receivedData = try await sut.performRequest(anyRequest())
         capturedResults.append(receivedData)
         
        
-        XCTAssertEqual(capturedResults, [.success(validData().1)])
+        XCTAssertEqual(capturedResults, [.success(validEmptyData().1)])
     
     }
 
@@ -115,6 +115,13 @@ class RemoteLightsPriceLoaderTest: XCTestCase {
     }
     
     private func validData() -> (Data, LightPriceResponse) {
+        let lihtPriceReponse = try! JSONDecoder().decode(LightPriceResponse.self,
+                                                   from: MockedData.LightPriceReponse.lightPriceResponse)
+        let validData = try! JSONEncoder().encode(lihtPriceReponse)
+        return (validData, lihtPriceReponse)
+    }
+    
+    private func validEmptyData() -> (Data, LightPriceResponse) {
         let lihtPriceReponse = try! JSONDecoder().decode(LightPriceResponse.self,
                                                    from: MockedData.LightPriceReponse.emptyResponse)
         let validData = try! JSONEncoder().encode(lihtPriceReponse)
