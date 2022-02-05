@@ -17,9 +17,9 @@ public struct LightPriceResponse: Codable, Equatable {
 
 // MARK: - Indicator
 public struct Indicator: Codable {
-    let name: String
-    let valuesUpdatedAt: String
-    let values: [Value]
+    let name: String?
+    let valuesUpdatedAt: String?
+    let values: [Value]?
 
     enum CodingKeys: String, CodingKey {
         case name
@@ -31,10 +31,10 @@ public struct Indicator: Codable {
 
 // MARK: - Value
 public struct Value: Codable, Equatable {
-    let value: Double
-    let datetime: String
-    let geoID: Int
-    let geoName: String
+    let value: Double?
+    let datetime: String?
+    let geoID: Int?
+    let geoName: String?
 
     enum CodingKeys: String, CodingKey {
         case value, datetime

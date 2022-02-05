@@ -79,6 +79,22 @@ class RemoteLightsPriceLoaderTest: XCTestCase {
             }
         }
     }
+    
+    func test_load_deliversNoItemsOn200HTTPReponseWithEmptyJSONList() async throws {
+        let lihtPriceReponse = try! JSONDecoder().decode(LightPriceResponse.self,
+                                                   from: MockedData.LightPriceReponse.emptyResponse)
+        let validData = try! JSONEncoder().encode(lihtPriceReponse)
+        
+        let validResponse = httPresponse(code: 200)
+        let (sut, _) = makeSut(result: .success((validData, validResponse)))
+        var capturedResults = [Result<LightPriceResponse?, RemoteLightsPriceLoader.Error>]()
+        let receivedData = try await sut.performRequest(anyRequest())
+        capturedResults.append(receivedData)
+        
+       
+        XCTAssertEqual(capturedResults, [.success(lihtPriceReponse)])
+    
+    }
 
     
     func test_performRequest_delivers_DataOn200HTTPResponse() async throws {

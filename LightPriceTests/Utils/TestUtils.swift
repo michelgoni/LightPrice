@@ -32,7 +32,7 @@ class TestsUtils {
 struct MockedData {
     struct LightPriceReponse {
         static let lightPriceResponse = TestsUtils().fetchJSON(fromFile: "PricesResponse")
-        static let malFormattedresponse = TestsUtils().fetchJSON(fromFile: "badJson")
+        static let emptyResponse = TestsUtils().fetchJSON(fromFile: "emptyJson")
     }
     
 }
