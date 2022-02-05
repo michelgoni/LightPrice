@@ -42,8 +42,14 @@ public final class RemoteLightsPriceLoader {
                 let data = data else {
                   throw Error.invalidData
               }
-        let finalResult = try! JSONDecoder().decode(LightPriceResponse.self, from: data)
-        return .success(finalResult)
+        
+        do {
+            let finalResult = try JSONDecoder().decode(LightPriceResponse.self, from: data)
+            return .success(finalResult)
+        }catch {
+            throw Error.invalidData
+        }
+      
     }
 }
 

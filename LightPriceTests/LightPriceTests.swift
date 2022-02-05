@@ -59,6 +59,26 @@ class RemoteLightsPriceLoaderTest: XCTestCase {
             }
         }
     }
+    
+    func test_load_deliversErrorOn200HttpResponseWithInvalidJSON() async throws  {
+        
+        let invalidJson = Data("invalid json".utf8)
+        let validResponse = httPresponse(code: 200)
+        
+        Task {
+            var capturedResults = [Result<LightPriceResponse, RemoteLightsPriceLoader.Error>]()
+            
+            let (sut, _) = makeSut(result: .success((invalidJson, validResponse)))
+            do {
+                let _ = try await sut.performRequest(anyRequest())
+                XCTFail("Expected error: \(RemoteLightsPriceLoader.Error.invalidData)")
+            }catch {
+                let capturedError: Result<LightPriceResponse, RemoteLightsPriceLoader.Error> = .failure(error as! RemoteLightsPriceLoader.Error)
+                capturedResults.append(capturedError)
+                XCTAssertEqual(capturedResults, [.failure(.invalidData)])
+            }
+        }
+    }
 
     
     func test_performRequest1_delivers_DataOn200HTTPResponse() async throws {
