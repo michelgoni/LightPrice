@@ -23,8 +23,11 @@ class RemoteLightsPriceLoaderTest: XCTestCase {
         
        
         let (sut, session) = makeSut(result: .success(anyResponse1()))
-        _ = try await sut.performRequest(request)
-        XCTAssertEqual(session.requests, [request])
+        Task {
+            _ = try await sut.performRequest(request)
+            XCTAssertEqual(session.requests, [request])
+        }
+     
     }
     
     func test_performRequest_delivers_connectivity_error() async throws {
@@ -84,12 +87,21 @@ class RemoteLightsPriceLoaderTest: XCTestCase {
        
         let validResponse = httPresponse(code: 200)
         let (sut, _) = makeSut(result: .success((validEmptyData().0, validResponse)))
-        var capturedResults = [Result<LightPriceResponse?, RemoteLightsPriceLoader.Error>]()
-        let receivedData = try await sut.performRequest(anyRequest())
-        capturedResults.append(receivedData)
         
-       
-        XCTAssertEqual(capturedResults, [.success(validEmptyData().1)])
+        Task {
+            var capturedResults = [Result<LightPriceResponse?, RemoteLightsPriceLoader.Error>]()
+            do {
+                let receivedData = try await sut.performRequest(anyRequest())
+                capturedResults.append(receivedData)
+                
+               
+                XCTAssertEqual(capturedResults, [.success(validEmptyData().1)])
+            }catch let error {
+                XCTFail("Fail with: \(error)")
+            }
+        }
+        
+        
     
     }
 
@@ -98,12 +110,18 @@ class RemoteLightsPriceLoaderTest: XCTestCase {
        
         let validResponse = httPresponse(code: 200)
         let (sut, _) = makeSut(result: .success((validData().0, validResponse)))
-        var capturedResults = [Result<LightPriceResponse?, RemoteLightsPriceLoader.Error>]()
-        let receivedData = try await sut.performRequest(anyRequest())
-        capturedResults.append(receivedData)
         
-       
-        XCTAssertEqual(capturedResults, [.success(validData().1)])
+        Task {
+            var capturedResults = [Result<LightPriceResponse?, RemoteLightsPriceLoader.Error>]()
+            do {
+                let receivedData = try await sut.performRequest(anyRequest())
+                capturedResults.append(receivedData)
+                XCTAssertEqual(capturedResults, [.success(validData().1)])
+            }catch let error {
+                XCTFail("Fail with: \(error)")
+            }
+        }
+      
     }
     
     //MARK: -- Helper
