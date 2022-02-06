@@ -32,13 +32,13 @@ class RemoteLightsPriceLoaderTest: XCTestCase {
     
     func test_performRequest_delivers_connectivity_error() async throws {
         let (sut, _) = makeSut(result: .failure(RemoteLightsPriceLoader.Error.connectivity))
-        var capturedResults = [Result<LightPriceResponse, RemoteLightsPriceLoader.Error>]()
+        var capturedResults = [Result<Indicator, RemoteLightsPriceLoader.Error>]()
         do {
             let _ = try await sut.performRequest(anyRequest())
            
             XCTFail("Expected error: \(RemoteLightsPriceLoader.Error.connectivity)")
         }catch{
-            let capturedError: Result<LightPriceResponse, RemoteLightsPriceLoader.Error> = .failure(error as! RemoteLightsPriceLoader.Error)
+            let capturedError: Result<Indicator, RemoteLightsPriceLoader.Error> = .failure(error as! RemoteLightsPriceLoader.Error)
             capturedResults.append(capturedError)
             XCTAssertEqual(capturedResults, [.failure(.connectivity)])
         }
@@ -48,14 +48,14 @@ class RemoteLightsPriceLoaderTest: XCTestCase {
         let errorCodes =   [199, 201, 300, 400, 401, 404, 500]
         errorCodes.forEach { code in
             Task {
-                var capturedResults = [Result<LightPriceResponse, RemoteLightsPriceLoader.Error>]()
+                var capturedResults = [Result<Indicator, RemoteLightsPriceLoader.Error>]()
                 let non200 = (Data(), httPresponse(code: code))
                 let (sut, _) = makeSut(result: .success(non200))
                 do {
                     let _ = try await sut.performRequest(anyRequest())
                     XCTFail("Expected error: \(RemoteLightsPriceLoader.Error.invalidData)")
                 }catch {
-                    let capturedError: Result<LightPriceResponse, RemoteLightsPriceLoader.Error> = .failure(error as! RemoteLightsPriceLoader.Error)
+                    let capturedError: Result<Indicator, RemoteLightsPriceLoader.Error> = .failure(error as! RemoteLightsPriceLoader.Error)
                     capturedResults.append(capturedError)
                     XCTAssertEqual(capturedResults, [.failure(.invalidData)])
                 }
@@ -89,20 +89,17 @@ class RemoteLightsPriceLoaderTest: XCTestCase {
         let (sut, _) = makeSut(result: .success((validEmptyData().0, validResponse)))
         
         Task {
-            var capturedResults = [Result<LightPriceResponse?, RemoteLightsPriceLoader.Error>]()
+            var capturedResults = [Result<Indicator?, RemoteLightsPriceLoader.Error>]()
             do {
                 let receivedData = try await sut.performRequest(anyRequest())
                 capturedResults.append(receivedData)
                 
                
-                XCTAssertEqual(capturedResults, [.success(validEmptyData().1)])
+                XCTAssertEqual(capturedResults, [.success(validEmptyData().1.indicator)])
             }catch {
-                XCTFail("Expected success with and empty item: \(validEmptyData().1)")
+                XCTFail("Expected success with and empty item: \(validEmptyData().1.indicator)")
             }
         }
-        
-        
-    
     }
 
     
@@ -112,16 +109,15 @@ class RemoteLightsPriceLoaderTest: XCTestCase {
         let (sut, _) = makeSut(result: .success((validData().0, validResponse)))
         
         Task {
-            var capturedResults = [Result<LightPriceResponse?, RemoteLightsPriceLoader.Error>]()
+            var capturedResults = [Result<Indicator?, RemoteLightsPriceLoader.Error>]()
             do {
                 let receivedData = try await sut.performRequest(anyRequest())
                 capturedResults.append(receivedData)
-                XCTAssertEqual(capturedResults, [.success(validData().1)])
+                XCTAssertEqual(capturedResults, [.success(validData().1.indicator)])
             }catch {
-                XCTFail("Expected success with some data: \(validData().1)")
+                XCTFail("Expected success with some data: \(validData().1.indicator)")
             }
         }
-      
     }
     
     //MARK: -- Helper

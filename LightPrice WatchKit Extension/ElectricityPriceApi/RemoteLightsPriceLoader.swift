@@ -32,7 +32,7 @@ public final class RemoteLightsPriceLoader {
     }
     
     
-    public func performRequest(_ request: URLRequest) async throws -> Result<LightPriceResponse?, Error> {
+    public func performRequest(_ request: URLRequest) async throws -> Result<Indicator?, Error> {
         guard let (data, response) = try? await client.data(request: request) else {
             throw Error.connectivity
         }
@@ -44,13 +44,17 @@ public final class RemoteLightsPriceLoader {
               }
         
         do {
-            let finalResult = try JSONDecoder().decode(LightPriceResponse.self, from: data)
-            return .success(finalResult)
+            let finalResult = try JSONDecoder().decode(Root.self, from: data)
+            return .success(finalResult.indicator)
         }catch {
             throw Error.invalidData
         }
       
     }
+}
+
+private struct Root: Codable {
+    let indicator: Indicator
 }
 
 

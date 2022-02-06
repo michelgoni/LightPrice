@@ -12,11 +12,11 @@ public struct LightPriceResponse: Codable, Equatable {
         return lhs.indicator.name == rhs.indicator.name
     }
     
-    let indicator: Indicator
+    public let indicator: Indicator
 }
 
 // MARK: - Indicator
-public struct Indicator: Codable {
+public struct Indicator: Codable, Equatable {
     let name: String?
     let valuesUpdatedAt: String?
     let values: [Value]?
