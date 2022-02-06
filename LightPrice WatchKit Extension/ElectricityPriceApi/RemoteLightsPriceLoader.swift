@@ -42,21 +42,16 @@ public final class RemoteLightsPriceLoader {
                 let data = data else {
                   throw Error.invalidData
               }
-        
         do {
-        
-            let finalResult = try JSONDecoder().decode(Root.self, from: data)
-            return .success(finalResult.indicator?.values?.map{$0.lightpriceElement})
+            let values = try FeedItemsMapper.map(data, from: response)
+            return .success(values?.toModels())
         }catch {
             throw Error.invalidData
         }
-      
     }
 }
 
- struct Root: Codable {
-    let indicator: Indicator?
-}
+
 
 
 

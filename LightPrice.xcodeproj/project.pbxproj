@@ -22,6 +22,7 @@
 		B40EAA1C27999354006DA634 /* LightPriceResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = B40EAA1B27999354006DA634 /* LightPriceResponse.swift */; };
 		B4686EEE27AE7FD8001D58DC /* emptyJson.json in Resources */ = {isa = PBXBuildFile; fileRef = B4686EED27AE7FD8001D58DC /* emptyJson.json */; };
 		B46F814B27B05028009B1F8B /* LightPriceElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46F814A27B05028009B1F8B /* LightPriceElement.swift */; };
+		B46F814D27B0535F009B1F8B /* RemoteLightsPriceMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46F814C27B0535F009B1F8B /* RemoteLightsPriceMapper.swift */; };
 		B4EF1A2327AB0F8300E70DD3 /* TestUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4EF1A2227AB0F8300E70DD3 /* TestUtils.swift */; };
 		B4EF1A2527AB0FC600E70DD3 /* PricesResponse.json in Resources */ = {isa = PBXBuildFile; fileRef = B4EF1A2427AB0FC600E70DD3 /* PricesResponse.json */; };
 /* End PBXBuildFile section */
@@ -95,6 +96,7 @@
 		B40EAA1B27999354006DA634 /* LightPriceResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightPriceResponse.swift; sourceTree = "<group>"; };
 		B4686EED27AE7FD8001D58DC /* emptyJson.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = emptyJson.json; sourceTree = "<group>"; };
 		B46F814A27B05028009B1F8B /* LightPriceElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightPriceElement.swift; sourceTree = "<group>"; };
+		B46F814C27B0535F009B1F8B /* RemoteLightsPriceMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteLightsPriceMapper.swift; sourceTree = "<group>"; };
 		B4EF1A2227AB0F8300E70DD3 /* TestUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestUtils.swift; sourceTree = "<group>"; };
 		B4EF1A2427AB0FC600E70DD3 /* PricesResponse.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = PricesResponse.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -186,6 +188,7 @@
 			children = (
 				2D8D13BE278B750B00B7D516 /* RemoteLightsPriceLoader.swift */,
 				B40EAA1B27999354006DA634 /* LightPriceResponse.swift */,
+				B46F814C27B0535F009B1F8B /* RemoteLightsPriceMapper.swift */,
 			);
 			path = ElectricityPriceApi;
 			sourceTree = "<group>";
@@ -371,6 +374,7 @@
 				2D8D13BF278B750B00B7D516 /* RemoteLightsPriceLoader.swift in Sources */,
 				2D8D1386278B5A9000B7D516 /* ContentView.swift in Sources */,
 				2D8D138C278B5A9000B7D516 /* ComplicationController.swift in Sources */,
+				B46F814D27B0535F009B1F8B /* RemoteLightsPriceMapper.swift in Sources */,
 				B40EAA1C27999354006DA634 /* LightPriceResponse.swift in Sources */,
 				2D8D1384278B5A9000B7D516 /* LightPriceApp.swift in Sources */,
 				2D8D138A278B5A9000B7D516 /* NotificationView.swift in Sources */,
