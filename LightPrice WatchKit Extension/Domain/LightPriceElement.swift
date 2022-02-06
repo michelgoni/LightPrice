@@ -6,3 +6,12 @@
 //
 
 import Foundation
+
+
+public struct LightPriceElement: Equatable {
+    
+    let value: Double?
+    let datetime: String?
+    let geoID: Int?
+    let geoName: String?
+}

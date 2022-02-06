@@ -9,17 +9,19 @@ import Foundation
 
 public struct LightPriceResponse: Codable, Equatable {
     public static func == (lhs: LightPriceResponse, rhs: LightPriceResponse) -> Bool {
-        return lhs.indicator.name == rhs.indicator.name
+        return lhs.indicator?.name == rhs.indicator?.name
     }
     
-    public let indicator: Indicator
+    public let indicator: Indicator?
 }
 
 // MARK: - Indicator
 public struct Indicator: Codable, Equatable {
     let name: String?
     let valuesUpdatedAt: String?
-    let values: [Value]?
+    public let values: [Value]?
+    
+    
 
     enum CodingKeys: String, CodingKey {
         case name
@@ -35,6 +37,9 @@ public struct Value: Codable, Equatable {
     let datetime: String?
     let geoID: Int?
     let geoName: String?
+    public var lightpriceElement: LightPriceElement {
+          LightPriceElement(value: value, datetime: datetime, geoID: geoID, geoName: geoName)
+      }
 
     enum CodingKeys: String, CodingKey {
         case value, datetime

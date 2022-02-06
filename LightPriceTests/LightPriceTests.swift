@@ -89,13 +89,13 @@ class RemoteLightsPriceLoaderTest: XCTestCase {
         let (sut, _) = makeSut(result: .success((validEmptyData().0, validResponse)))
         
         Task {
-            var capturedResults = [Result<Indicator?, RemoteLightsPriceLoader.Error>]()
+            var capturedResults = [Result<[LightPriceElement]?, RemoteLightsPriceLoader.Error>]()
             do {
                 let receivedData = try await sut.performRequest(anyRequest())
                 capturedResults.append(receivedData)
                 
                
-                XCTAssertEqual(capturedResults, [.success(validEmptyData().1.indicator)])
+                XCTAssertEqual(capturedResults, [.success(validEmptyData().1.indicator?.values?.map{$0.lightpriceElement})])
             }catch {
                 XCTFail("Expected success with and empty item: \(validEmptyData().1.indicator)")
             }
@@ -109,11 +109,11 @@ class RemoteLightsPriceLoaderTest: XCTestCase {
         let (sut, _) = makeSut(result: .success((validData().0, validResponse)))
         
         Task {
-            var capturedResults = [Result<Indicator?, RemoteLightsPriceLoader.Error>]()
+            var capturedResults = [Result<[LightPriceElement]?, RemoteLightsPriceLoader.Error>]()
             do {
                 let receivedData = try await sut.performRequest(anyRequest())
                 capturedResults.append(receivedData)
-                XCTAssertEqual(capturedResults, [.success(validData().1.indicator)])
+                XCTAssertEqual(capturedResults, [.success(validEmptyData().1.indicator?.values?.map{$0.lightpriceElement})])
             }catch {
                 XCTFail("Expected success with some data: \(validData().1.indicator)")
             }
