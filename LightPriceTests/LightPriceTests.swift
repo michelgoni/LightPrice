@@ -97,7 +97,7 @@ class RemoteLightsPriceLoaderTest: XCTestCase {
                
                 XCTAssertEqual(capturedResults, [.success(validEmptyData().1.indicator?.values?.map{$0.lightpriceElement})])
             }catch {
-                XCTFail("Expected success with and empty item: \(validEmptyData().1.indicator)")
+                XCTFail("Expected success with and empty item: \(validEmptyData().1.indicator!)")
             }
         }
     }
@@ -115,7 +115,7 @@ class RemoteLightsPriceLoaderTest: XCTestCase {
                 capturedResults.append(receivedData)
                 XCTAssertEqual(capturedResults, [.success(validEmptyData().1.indicator?.values?.map{$0.lightpriceElement})])
             }catch {
-                XCTFail("Expected success with some data: \(validData().1.indicator)")
+                XCTFail("Expected success with some data: \(validData().1.indicator!)")
             }
         }
     }

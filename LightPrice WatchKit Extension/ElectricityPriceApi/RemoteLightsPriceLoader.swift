@@ -50,8 +50,3 @@ public final class RemoteLightsPriceLoader {
         }
     }
 }
-
-
-
-
-
