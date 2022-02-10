@@ -20,6 +20,7 @@
 		2D8D139D278B5A9200B7D516 /* RemoteLightsPriceLoaderTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D8D139C278B5A9200B7D516 /* RemoteLightsPriceLoaderTest.swift */; };
 		2D8D13BF278B750B00B7D516 /* RemoteLightsPriceLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D8D13BE278B750B00B7D516 /* RemoteLightsPriceLoader.swift */; };
 		B40EAA1C27999354006DA634 /* LightPriceResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = B40EAA1B27999354006DA634 /* LightPriceResponse.swift */; };
+		B43B2F4327B586DC00DD6B2E /* RemoteLightPriceAPIEndToEndTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B43B2F4227B586DC00DD6B2E /* RemoteLightPriceAPIEndToEndTests.swift */; };
 		B4686EEE27AE7FD8001D58DC /* emptyJson.json in Resources */ = {isa = PBXBuildFile; fileRef = B4686EED27AE7FD8001D58DC /* emptyJson.json */; };
 		B46F814B27B05028009B1F8B /* LightPriceElement.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46F814A27B05028009B1F8B /* LightPriceElement.swift */; };
 		B46F814D27B0535F009B1F8B /* RemoteLightsPriceMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B46F814C27B0535F009B1F8B /* RemoteLightsPriceMapper.swift */; };
@@ -94,6 +95,7 @@
 		2D8D139C278B5A9200B7D516 /* RemoteLightsPriceLoaderTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteLightsPriceLoaderTest.swift; sourceTree = "<group>"; };
 		2D8D13BE278B750B00B7D516 /* RemoteLightsPriceLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteLightsPriceLoader.swift; sourceTree = "<group>"; };
 		B40EAA1B27999354006DA634 /* LightPriceResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightPriceResponse.swift; sourceTree = "<group>"; };
+		B43B2F4227B586DC00DD6B2E /* RemoteLightPriceAPIEndToEndTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteLightPriceAPIEndToEndTests.swift; sourceTree = "<group>"; };
 		B4686EED27AE7FD8001D58DC /* emptyJson.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = emptyJson.json; sourceTree = "<group>"; };
 		B46F814A27B05028009B1F8B /* LightPriceElement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LightPriceElement.swift; sourceTree = "<group>"; };
 		B46F814C27B0535F009B1F8B /* RemoteLightsPriceMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteLightsPriceMapper.swift; sourceTree = "<group>"; };
@@ -179,6 +181,7 @@
 			children = (
 				B4EF1A2627AB14EB00E70DD3 /* Utils */,
 				2D8D139C278B5A9200B7D516 /* RemoteLightsPriceLoaderTest.swift */,
+				B43B2F4227B586DC00DD6B2E /* RemoteLightPriceAPIEndToEndTests.swift */,
 			);
 			path = LightPriceTests;
 			sourceTree = "<group>";
@@ -386,6 +389,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B43B2F4327B586DC00DD6B2E /* RemoteLightPriceAPIEndToEndTests.swift in Sources */,
 				2D8D139D278B5A9200B7D516 /* RemoteLightsPriceLoaderTest.swift in Sources */,
 				B4EF1A2327AB0F8300E70DD3 /* TestUtils.swift in Sources */,
 			);

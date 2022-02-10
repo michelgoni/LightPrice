@@ -19,7 +19,10 @@ extension URLSession: HTTPClient {
    
 }
 
+
+
 public final class RemoteLightsPriceLoader {
+    public typealias LightPriceResult = Result<[LightPriceElement]?, Error>
     
     public enum Error: Swift.Error, Equatable {
         case invalidData
@@ -32,7 +35,7 @@ public final class RemoteLightsPriceLoader {
     }
     
     
-    public func performRequest(_ request: URLRequest) async throws -> Result<[LightPriceElement]?, Error> {
+    public func performRequest(_ request: URLRequest) async throws -> LightPriceResult {
         guard let (data, response) = try? await client.data(request: request) else {
             throw Error.connectivity
         }
