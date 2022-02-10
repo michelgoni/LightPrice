@@ -1,6 +1,6 @@
 //
-//  LightPriceTests.swift
-//  LightPriceTests
+//  RemoteLightsPriceLoaderTest.swift
+//  RemoteLightsPriceLoaderTest
 //
 //  Created by Michel Goñi on 9/1/22.
 //
