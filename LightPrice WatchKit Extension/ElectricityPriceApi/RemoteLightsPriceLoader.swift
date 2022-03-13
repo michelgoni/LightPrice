@@ -7,21 +7,9 @@
 
 import Foundation
 
-public protocol HTTPClient {
-  
-    func data(request: URLRequest) async throws -> (Data?, URLResponse)
-}
-
-extension URLSession: HTTPClient {
-    public func data(request: URLRequest) async throws -> (Data?, URLResponse) {
-        try await data(for: request, delegate: nil)
-    }
-   
-}
-
-
 
 public final class RemoteLightsPriceLoader {
+    
     public typealias LightPriceResult = Result<[LightPriceElement]?, Error>
     
     public enum Error: Swift.Error, Equatable {
